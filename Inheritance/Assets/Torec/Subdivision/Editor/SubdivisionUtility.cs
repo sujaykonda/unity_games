@@ -46,7 +46,7 @@ namespace Torec
                 };
                 foreach (Transform t in selection) {
                     // Add Undo record
-                    SkinnedMeshRenderer mf = CatmullClark.CheckMeshFilter(t.gameObject);
+                    MeshFilter mf = CatmullClark.CheckMeshFilter(t.gameObject);
                     Undo.RecordObject(mf, "Subdivide " + t.name);
                     // Subdivide
                     CatmullClark.Subdivide(t.gameObject, iterations, options);

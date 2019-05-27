@@ -982,7 +982,7 @@ namespace Torec
         public static void Subdivide(GameObject obj, int iterations, Options options = default(Options)) {
             if (iterations <= 0) return;
 
-            SkinnedMeshRenderer mf = CheckMeshFilter(obj);
+            MeshFilter mf = CheckMeshFilter(obj);
 
             Mesh originalMesh = mf.sharedMesh;
 
@@ -994,11 +994,11 @@ namespace Torec
             mf.sharedMesh = mesh;
         }
 
-        public static SkinnedMeshRenderer CheckMeshFilter(GameObject obj)
+        public static MeshFilter CheckMeshFilter(GameObject obj)
         {
             if (obj == null) throw new System.NullReferenceException("No GameObject specified");
 
-            var mf = obj.GetComponent<SkinnedMeshRenderer>();
+            MeshFilter mf = obj.GetComponent<MeshFilter>();
             if (mf == null) throw new System.Exception("No MeshFilter found for " + obj.name);
 
             if (mf.sharedMesh == null) throw new System.Exception("No mesh set to " + obj.name);

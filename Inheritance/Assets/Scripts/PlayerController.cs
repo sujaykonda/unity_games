@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
             anim.SetTrigger("swordToIdleTrigger");
         }
     }
-    void OnCollisionEnter(Collision collisionInfo)
+    void OnCollisionStay(Collision collisionInfo)
     {
         if(Input.GetKey(KeyCode.Space)){
             anim.SetTrigger("JumpTrigger");
