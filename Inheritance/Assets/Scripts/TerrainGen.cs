@@ -5,8 +5,12 @@ using UnityEngine;
 public class TerrainGen : MonoBehaviour
 {
     Mesh mesh;
+    public Transform t;
+    bool firstUpdate = true;
     Vector3[] vertices;
     public GameObject grassPatch;
+    public List<GameObject> rockTypes;
+    public int rockNum = 5;
     public int mapSizeX = 100;
     public int mapSizeZ = 100;
     int[] tri; 
@@ -22,8 +26,22 @@ public class TerrainGen : MonoBehaviour
        for(int i = 0; i < mapSizeX*mapSizeZ*6; i+=3){
            PlaceGrass(vertices[tri[i]],vertices[tri[i+1]],vertices[tri[i+2]]);
        }
-       GetComponent<MeshCollider>().sharedMesh = mesh;
        
+       
+       
+    }
+    void Update(){
+        if(firstUpdate){
+            for(int i = 0; i < rockNum; i++){
+                foreach (GameObject rock in rockTypes){
+                    Vector3 origin = new Vector3(Random.Range(0f, 30f), -100f, Random.Range(0f, 30f));
+                    GameObject Rock = Instantiate(rock, origin, Quaternion.identity);
+                    Rock.transform.localScale= new Vector3(0.7f,0.7f,0.7f);
+                    
+                }
+            }
+            firstUpdate = false;
+        }
     }
     void CreateTerrain(){
         vertices = new Vector3[(mapSizeX+1)*(mapSizeZ+1)];
@@ -39,14 +57,33 @@ public class TerrainGen : MonoBehaviour
         tri = new int[mapSizeX*mapSizeZ*6];
         i = 0;
         int ind = 0;
+        MeshCollider meshC;
+        Mesh Submesh = new Mesh();
         for(int z = 0; z < mapSizeZ; z++){
             for(int x =0; x < mapSizeX; x++){
+                meshC = gameObject.AddComponent<MeshCollider>();
                 tri[ind]= i;
                 tri[ind+1]=i+mapSizeZ + 1;
                 tri[ind+2]=i+1;
+                Submesh = new Mesh();
+                Submesh.vertices = vertices;
+                Submesh.triangles = new int[]{
+                    i,
+                    i+mapSizeZ +1,
+                    i+1,
+                };
+                meshC.sharedMesh =Submesh;
+                meshC = gameObject.AddComponent<MeshCollider>();
                 tri[ind+3]=i+mapSizeZ + 1;
                 tri[ind+4]=i+mapSizeZ + 2;
                 tri[ind+5]=i+1;
+                Submesh = new Mesh();
+                Submesh.vertices = vertices;
+                Submesh.triangles = new int[]{
+                    i + mapSizeZ + 2,
+                    i+mapSizeZ +1,
+                    i+1,
+                };
                 ind = ind+6;
                 i++;
             }
