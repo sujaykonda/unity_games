@@ -7,6 +7,22 @@ public class UI_sword : MonoBehaviour
 
     public Animator anim;
 
+    //Turn Buttons
+    public void SwordTurnLeftOnClick()
+    {
+        anim.SetTrigger("swordTurnLeftTrigger");
+    }
+
+    public void SwordTurnRightOnClick()
+    {
+        anim.SetTrigger("swordTurnRightTrigger");
+    }
+
+    public void SwordTurn180OnClick()
+    {
+        anim.SetTrigger("swordTurn180Trigger");
+    }
+
     //Idle Buttons
     public void SwordIdleOnClick()
     {
@@ -72,8 +88,15 @@ public class UI_sword : MonoBehaviour
     }
 
     //Death Buttons
-    public void SwordDeathOnClick()
+    public void SwordDeath01OnClick()
     {
         anim.SetTrigger("swordDeathTrigger");
+        anim.SetInteger("swordDeathSelect", 1);
+    }
+
+    public void SwordDeath02OnClick()
+    {
+        anim.SetTrigger("swordDeathTrigger");
+        anim.SetInteger("swordDeathSelect", 2);
     }
 }

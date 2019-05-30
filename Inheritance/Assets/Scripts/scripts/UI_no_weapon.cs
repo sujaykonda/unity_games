@@ -6,6 +6,22 @@ public class UI_no_weapon : MonoBehaviour
 {
     public Animator anim;
 
+    //Turns Buttons
+    public void TurnLeftOnClick()
+    {
+        anim.SetTrigger("turnLeftTrigger");
+    }
+
+    public void TurnRightOnClick()
+    {
+        anim.SetTrigger("turnRightTrigger");
+    }
+
+    public void Turn180OnClick()
+    {
+        anim.SetTrigger("turn180Trigger");
+    }
+
     //Idle Buttons
     public void Idle01OnClick()
     {

@@ -4,14 +4,11 @@ using System.Collections;
 
 public class HiderInTime : MonoBehaviour
 {
-    public Animator anim;
     IEnumerator ExecuteAfterTime(float time)
     {
-        anim.SetTrigger("swordToIdleTrigger");
         yield return new WaitForSeconds(time);
 
         GetComponent<WeaponHide>().turned = false;
-
         GetComponent<SkinnedMeshRenderer>().enabled = false;
     }
 
