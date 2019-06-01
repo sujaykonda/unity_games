@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     public Animator anim;
     float lim = float.PositiveInfinity; 
     float startLim = float.NegativeInfinity;
+    float startNext = float.NegativeInfinity;
     float speed;
     // Start is called before the first frame update
     void Start()
@@ -23,26 +24,28 @@ public class PlayerController : MonoBehaviour
             if(Input.GetKey(KeyCode.LeftShift)){
                 speed = 1f;
             }
+
         }
         if(Input.GetKey(KeyCode.DownArrow)){
             speed = -0.5f;
         }
-        if(Input.GetKeyDown(KeyCode.RightArrow)){
+        if(Input.GetKeyDown(KeyCode.RightArrow)&& Time.time>startNext){
             if(anim.GetCurrentAnimatorStateInfo(0).IsTag("swordHide")){
                 anim.SetTrigger("swordTurnRightTrigger");
             }
             else{
                 anim.SetTrigger("turnRightTrigger");
             }
-            
+            startNext = Time.time+1f;
         }
-        if(Input.GetKeyDown(KeyCode.LeftArrow)){
+        if(Input.GetKeyDown(KeyCode.LeftArrow)&& Time.time>startNext){
             if(anim.GetCurrentAnimatorStateInfo(0).IsTag("swordHide")){
                 anim.SetTrigger("swordTurnLeftTrigger");
             }
             else{
                 anim.SetTrigger("turnLeftTrigger");
             }
+            startNext = Time.time+1f;
         }
         if(anim.GetCurrentAnimatorStateInfo(0).IsTag("swordHide")){
             anim.SetFloat("swordWalkSelect", speed);
@@ -50,7 +53,7 @@ public class PlayerController : MonoBehaviour
         else{
             anim.SetFloat("walkSelect", speed);
         }
-        if(Input.GetKeyDown(KeyCode.Z)){
+        if(Input.GetKeyDown(KeyCode.Z)&& Time.time>startNext){
             if(anim.GetCurrentAnimatorStateInfo(0).IsTag("swordHide")){
                 if(Time.time<lim&&startLim<Time.time){
                     anim.SetInteger("swordStrikeSelect",1);
@@ -63,8 +66,9 @@ public class PlayerController : MonoBehaviour
                 lim = Time.time+7f;
                 startLim = Time.time+1f;
             }
+            startNext = Time.time+1f;
         }
-        if(Input.GetKeyDown(KeyCode.X)){
+        if(Input.GetKeyDown(KeyCode.X)&& Time.time>startNext){
             if(anim.GetCurrentAnimatorStateInfo(0).IsTag("swordHide")){
                 if(Time.time<lim&&startLim<Time.time){
                     anim.SetInteger("swordStrikeSelect",4);
@@ -77,8 +81,9 @@ public class PlayerController : MonoBehaviour
                 lim = Time.time+7f;
                 startLim = Time.time+1f;
             }
+            startNext = Time.time+1.7f;
         }
-        if(Input.GetKeyDown(KeyCode.C)){
+        if(Input.GetKeyDown(KeyCode.C)&& Time.time>startNext){
             if(anim.GetCurrentAnimatorStateInfo(0).IsTag("swordHide")){
                 if(Time.time<lim&&startLim<Time.time){
                     anim.SetInteger("swordStrikeSelect",7);
@@ -91,12 +96,12 @@ public class PlayerController : MonoBehaviour
                 lim = Time.time+7f;
                 startLim = Time.time+1f;
             }
-            
+            startNext = Time.time+1.4f;
         }
         
         
 
-        if(Time.time >= lim){
+        if(Time.time >= lim&& Time.time>startNext){
             anim.SetTrigger("swordToIdleTrigger");
         }
     }
